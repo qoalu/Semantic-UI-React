@@ -237,10 +237,7 @@ export default class Dropdown extends Component {
     openOnFocus: PropTypes.bool,
 
     /** Array of Dropdown.Item props e.g. `{ text: '', value: '' }` */
-    options: customPropTypes.every([
-      customPropTypes.disallow(['children']),
-      PropTypes.arrayOf(PropTypes.shape(DropdownItem.propTypes)),
-    ]),
+    options: customPropTypes.itemShorthand,
 
     /** Placeholder text. */
     placeholder: PropTypes.string,
@@ -1088,17 +1085,15 @@ export default class Dropdown extends Component {
       ? optValue => _.includes(value, optValue)
       : optValue => optValue === value
 
-    return _.map(options, (opt, i) => (
-      <DropdownItem
-        key={`${opt.value}-${i}`}
-        active={isActive(opt.value)}
-        onClick={this.handleItemClick}
-        selected={selectedIndex === i}
-        {...opt}
+    return _.map(options, (opt, i) => {
+      return DropdownItem.create(opt, {
+        active: isActive(opt.value),
+        onClick: this.handleItemClick,
+        selected: selectedIndex === i,
         // Needed for handling click events on disabled items
-        style={{ ...opt.style, pointerEvents: 'all' }}
-      />
-    ))
+        style: { pointerEvents: 'all' },
+      })
+    })
   }
 
   renderMenu = () => {
