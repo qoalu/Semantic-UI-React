@@ -302,7 +302,7 @@ class Modal extends Component {
 
   render() {
     const { open } = this.state
-    const { closeOnDimmerClick, closeOnDocumentClick, dimmer } = this.props
+    const { closeOnDimmerClick, closeOnDocumentClick, dimmer, className } = this.props
     const mountNode = this.getMountNode()
 
     // Short circuit when server side rendering
@@ -321,6 +321,7 @@ class Modal extends Component {
         'ui',
         dimmer === 'inverted' && 'inverted',
         'page modals dimmer transition visible active',
+        className
       )
 
     // Heads up!
